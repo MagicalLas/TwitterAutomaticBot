@@ -1,0 +1,72 @@
+<script>
+    function getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+    function onKeyDown() {
+        if (event.keyCode == 13) {
+            FindName('search').value = '';
+        }
+    }
+
+</script>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/shards.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script src="js/shards.min.js"></script>
+    <script>
+        function FindName(name) {
+            return document.getElementsByName(name)[0];
+        }
+        function GetValue(f) {
+            return (arg) => f(arg).value;
+        }
+
+        var httpRequest = new XMLHttpRequest();
+        function tweet() {
+            if (!httpRequest) {
+                alert("Networkin' Error");
+            }
+            httpRequest.onreadystatechange = () => { console.log(httpRequest.responseText); };
+            httpRequest.open("POST", "/tweet", true);
+            httpRequest.send("v=" + getCookie("verif") + "&" + "m=" + GetValue(FindName)('search') + "h=" + GetValue(FindName)('hash'));
+        }
+
+    </script>
+    <title>Shttp</title>
+</head>
+
+<body>
+    <div>
+        <input class="w-50" type="text" placeholder="Enter Your Name" name="search" onkeydown="onKeyDown()">
+        <input class="w-50" type="text" placeholder="Enter Your Name" name="hash">
+        <button type="button" class="btn btn-success" onclick="tweet()">Summit</button>
+    </div>
+</body>
+
+</html>
