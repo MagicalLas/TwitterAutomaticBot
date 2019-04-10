@@ -54,9 +54,12 @@
             }
             httpRequest.onreadystatechange = () => { console.log(httpRequest.responseText); };
             httpRequest.open("POST", "/tweet", true);
-            httpRequest.send("v=" + getCookie("verif") + "&" + "m=" + GetValue(FindName)('search') + "h=" + GetValue(FindName)('hash'));
+            var send_data = {
+                m:GetValue(FindName)('search'),
+                h:GetValue(FindName)('hash')
+            }
+            httpRequest.send(send_data);
         }
-
     </script>
     <title>Shttp</title>
 </head>
